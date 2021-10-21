@@ -1,28 +1,19 @@
 const getRomanNumeral = number => {
     if (number < 1 || number > 3000) throw new Error("Number must be in the range 1 - 3000");
     if (!Number.isInteger(number)) throw new Error("Number must be an Integer");
+    
+    let arabic = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1];
+    let roman = ["M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"];
+    let index = 0;
     let romanNumeral = "";
-
-    const addI = start => {
-        for (let i = start; i < number; i++) {
-            romanNumeral += "I";
+    while (number > 0) {
+        let quotient = Math.floor(number / arabic[index]);
+        number = number % arabic[index];
+        for (let i = 0; i < quotient; i++) {
+            romanNumeral += roman[index];
         }
-    };
-
-    if (number < 4) {
-        addI(0);
-    } else if (number === 4) {
-        romanNumeral = "IV";
-    } else if (number < 9) {
-        romanNumeral = "V";
-        addI(5);
-    } else if (number === 9) {
-        romanNumeral = "IX";
-    } else if (number < 14) {
-        romanNumeral = "X";
-        addI(10);
+        index++;
     }
-
     return romanNumeral;
 }
 
